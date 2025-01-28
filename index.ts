@@ -1,7 +1,7 @@
 import cors from "cors";
 import { configDotenv } from "dotenv";
 import express, { Application, Response } from "express";
-import { dbConnect } from "./databse/init";
+import { dbConnect } from "./database/init";
 
 configDotenv();
 await dbConnect();
