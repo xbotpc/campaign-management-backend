@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
-import { body } from "express-validator";
+import { body, checkExact } from "express-validator";
 
 export function schemaValidation() {
-    return [
+    return checkExact([
         body("title")
             .exists({
                 values: "null",
@@ -41,7 +41,7 @@ export function schemaValidation() {
             ).isISO4217().withMessage(
                 "please provide ISO 4217 format for currency",
             ),
-    ];
+    ]);
 }
 
 export function handler(req: Request, res: Response) {
