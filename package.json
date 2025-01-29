@@ -5,8 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "test": "npm run test",
-    "dev": "tsx index.ts",
-    "knex:make-migration": "knex migrate:make --migrations-directory ./database/migrations -x ts"
+    "dev": "tsx src/index.ts",
+    "knex:make-migration": "knex migrate:make --migrations-directory ./database/migrations -x ts",
+    "knex:migration:latest": "knex migrate:latest --knexfile ./src/database/knexfile.cjs"
   },
   "repository": {
     "type": "git",
