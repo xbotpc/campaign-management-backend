@@ -1,6 +1,8 @@
 import { Campaign, CampaignDTO } from "../types/campaign";
 import { db } from "./init";
 
+const ALLOWED_COLUMNS = ["id", "title", "url", "isActive"];
+
 export async function insertCampaign(
     data: CampaignDTO,
 ) {
@@ -11,15 +13,18 @@ export async function findCampaign(
     { query, isActive }: { query: string; isActive?: boolean },
 ) {
     const sqlQuery = db<Campaign>("campaigns")
-        .select(["id", "title", "url", "isActive"]);
+        .select(ALLOWED_COLUMNS);
 
     if (query && query !== "") {
         sqlQuery
-            .whereRaw(`fulltext_document @@ PLAINTO_TSQUERY(:query)`, {
-                query,
-            })
+            .whereRaw(
+                `fulltext_document @@ to_tsquery(:query || ':*')`,
+                {
+                    query,
+                },
+            )
             .orderByRaw(
-                `TS_RANK(fulltext_document, PLAINTO_TSQUERY(:query)) DESC`,
+                `TS_RANK(fulltext_document, to_tsquery(:query || ':*')) DESC`,
                 {
                     query,
                 },
