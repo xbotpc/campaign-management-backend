@@ -19,7 +19,7 @@ export function schemaValidation() {
                 values: "null",
             }).withMessage("Url cannot be null")
             .isURL().withMessage("Invalid url value"),
-        body("is_active")
+        body("isActive")
             .optional()
             .isBoolean().withMessage(
                 "Invalid is_active value",
@@ -48,6 +48,6 @@ export function schemaValidation() {
 
 export async function handler(req: Request, res: Response, next: NextFunction) {
     const { payouts, ...campaign } = req.body as CampaignCreateDTO;
-        await createCampaign({ ...campaign, title: "" }, payouts);
-        res.status(201).send("Campaign Created");
+    await createCampaign(campaign, payouts);
+    res.status(201).send("Campaign Created");
 }
