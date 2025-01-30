@@ -1,9 +1,13 @@
 import { Response, Router } from "express";
+import { validateRequestSchema } from "../middleware/schemaValidation";
 import {
     handler as postCampaignHandler,
     schemaValidation as validateCampaignCreate,
 } from "./campaign/[post]";
-import { validateRequestSchema } from "../middleware/schemaValidation";
+import {
+    handler as searchCampaignHandler,
+    schemaValidation as validateCampaignSearch,
+} from "./campaign/search.[get]";
 
 export const router = Router();
 
@@ -16,4 +20,11 @@ router.post(
     validateCampaignCreate(),
     validateRequestSchema,
     postCampaignHandler,
+);
+
+router.get(
+    "/campaign/search",
+    validateCampaignSearch(),
+    validateRequestSchema,
+    searchCampaignHandler,
 );
