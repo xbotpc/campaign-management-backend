@@ -1,11 +1,11 @@
 import knex, { Knex } from "knex";
-
+import { knexSnakeCaseMappers } from "objection";
 export let db: Knex;
 
 export async function dbConnect() {
     try {
         db = knex({
-            client: 'pg',
+            client: "pg",
             connection: {
                 host: process.env.DB_HOST,
                 port: 5432,
@@ -13,11 +13,12 @@ export async function dbConnect() {
                 password: process.env.DB_PASSWORD,
                 database: process.env.DATABASE,
             },
+            ...knexSnakeCaseMappers(),
         });
-        await db.raw('SELECT 1+1 as result')
-        console.log('DB connection succesful');
+        await db.raw("SELECT 1+1 as result");
+        console.log("DB connection succesful");
     } catch (error) {
-        console.error('Error connecting to database', error);
+        console.error("Error connecting to database", error);
         throw error;
     }
 }
