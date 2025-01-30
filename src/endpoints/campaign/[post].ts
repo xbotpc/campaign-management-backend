@@ -1,5 +1,7 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { body, checkExact } from "express-validator";
+import { createCampaign } from "../../application/campaign/create";
+import { CampaignCreateDTO } from "../../types/campaign";
 
 export function schemaValidation() {
     return checkExact([
@@ -44,6 +46,8 @@ export function schemaValidation() {
     ]);
 }
 
-export function handler(req: Request, res: Response) {
-    res.status(201).json("Created");
+export async function handler(req: Request, res: Response, next: NextFunction) {
+    const { payouts, ...campaign } = req.body as CampaignCreateDTO;
+        await createCampaign({ ...campaign, title: "" }, payouts);
+        res.status(201).send("Campaign Created");
 }
