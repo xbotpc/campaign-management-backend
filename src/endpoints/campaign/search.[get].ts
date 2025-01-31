@@ -1,18 +1,18 @@
-import type { NextFunction, Request, Response } from "express";
-import { body, checkExact, query } from "express-validator";
+import type { Request, Response } from "express";
+import { checkExact, query } from "express-validator";
 import { search } from "../../application/campaign/search";
 
 export function schemaValidation() {
     return checkExact([
         query("queryString")
             .optional({
-                values: "null",
+                values: "falsy"
             }),
         query("isActive")
-            .optional()
-            .isBoolean().withMessage(
-                "Invalid isActive value",
-            ),
+            .optional({
+                values: "falsy"
+            })
+            .isBoolean(),
     ]);
 }
 
