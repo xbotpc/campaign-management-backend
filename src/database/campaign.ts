@@ -18,13 +18,13 @@ export async function findCampaign(
     if (query && query !== "") {
         sqlQuery
             .whereRaw(
-                `fulltext_document @@ to_tsquery(:query || ':*')`,
+                `fulltext_document @@ to_tsquery(concat(plainto_tsquery(:query),':*'))`,
                 {
                     query,
                 },
             )
             .orderByRaw(
-                `TS_RANK(fulltext_document, to_tsquery(:query || ':*')) DESC`,
+                `TS_RANK(fulltext_document, to_tsquery(concat(plainto_tsquery(:query),':*'))) DESC`,
                 {
                     query,
                 },
