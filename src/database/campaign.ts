@@ -9,6 +9,15 @@ export async function insertCampaign(
     return db<Campaign>("campaigns").insert(data).returning("*");
 }
 
+export async function getAllCampaigns(
+    { limit = 50, offset = 0 }: { limit: number; offset: number },
+) {
+    return db<Campaign>("campaigns")
+        .select(ALLOWED_COLUMNS)
+        .limit(limit)
+        .offset(offset);
+}
+
 export async function findCampaign(
     { query, isActive }: { query: string; isActive?: boolean },
 ) {

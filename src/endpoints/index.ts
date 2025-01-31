@@ -8,6 +8,10 @@ import {
     handler as searchCampaignHandler,
     schemaValidation as validateCampaignSearch,
 } from "./campaign/search.[get]";
+import {
+    schemaValidation as validateCampaignList,
+    handler as listSearchHandler,
+} from "./campaign/list.[get]";
 
 export const router = Router();
 
@@ -27,4 +31,11 @@ router.get(
     validateCampaignSearch(),
     validateRequestSchema,
     searchCampaignHandler,
+);
+
+router.get(
+    "/campaign/list",
+    validateCampaignList(),
+    validateRequestSchema,
+    listSearchHandler,
 );
