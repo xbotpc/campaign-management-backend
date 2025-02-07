@@ -7,7 +7,7 @@ export type Payout = {
 };
 
 export type PayoutDTO =
-    & Partial<Pick<Payout, "campaignID">>
+    & Partial<Pick<Payout, "campaignID" | "id">>
     & Pick<
         Payout,
         "amount" | "currency" | "country"

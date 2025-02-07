@@ -9,6 +9,6 @@ export async function insertPayout(
 
 export async function insertPayouts(
     payouts: PayoutDTO[],
-) {
+): Promise<Payout[]> {
     return db.batchInsert<Payout>("payouts", payouts, 100).returning("*");
 }

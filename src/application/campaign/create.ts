@@ -15,9 +15,9 @@ export async function createCampaign(
             url,
             isActive: isActive || false,
         });
-        const payoutsWithCampaignId = payouts.map((payout) => ({
+        const payoutsWithCampaignId = payouts.map(({ id, ...payout }) => ({
             ...payout,
-            campaignID: campaignID,
+            campaignID,
         }));
         await insertPayouts(payoutsWithCampaignId);
     } catch (error) {
