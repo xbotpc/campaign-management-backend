@@ -5,6 +5,10 @@ import {
     schemaValidation as validateCampaignCreate,
 } from "./campaign/[post]";
 import {
+    handler as patchCampaignHandler,
+    schemaValidation as validateCampaignUpdate,
+} from "./campaign/[patch]";
+import {
     handler as searchCampaignHandler,
     schemaValidation as validateCampaignSearch,
 } from "./campaign/search.[get]";
@@ -24,6 +28,13 @@ router.post(
     validateCampaignCreate(),
     validateRequestSchema,
     postCampaignHandler,
+);
+
+router.patch(
+    "/campaign",
+    validateCampaignUpdate(),
+    validateRequestSchema,
+    patchCampaignHandler,
 );
 
 router.get(

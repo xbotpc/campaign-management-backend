@@ -9,13 +9,24 @@ export async function insertCampaign(
     return db<Campaign>("campaigns").insert(data).returning("*");
 }
 
+export async function updateCampaign(
+    campaignID: string,
+    updateObject: CampaignDTO,
+) {
+    return db<Campaign>("campaigns")
+        .update(updateObject)
+        .where("id", campaignID)
+        .returning("*");
+}
+
 export async function getAllCampaigns(
     { limit = 50, offset = 0 }: { limit: number; offset: number },
 ) {
     return db<Campaign>("campaigns")
         .select(ALLOWED_COLUMNS)
         .limit(limit)
-        .offset(offset);
+        .offset(offset)
+        .orderBy("updatedAt", "DESC");
 }
 
 export async function findCampaign(
