@@ -37,12 +37,6 @@ export function schemaValidation() {
             .isDecimal().withMessage(
                 "amount data type should be decimal",
             ),
-        body("payouts.*.currency")
-            .isString().withMessage(
-                "currency data type should be string",
-            ).isISO4217().withMessage(
-                "please provide ISO 4217 format for currency",
-            ),
     ]);
 }
 
